@@ -59,7 +59,7 @@ public class MovieCommands {
                     .append(movie.getMovieLength()).append(" minutes)\n");
         }
 
-        return toReturn.deleteCharAt(toReturn.length()-1).toString();
+        return toReturn.deleteCharAt(toReturn.length() - 1).toString();
     }
 
     private Availability isAvailable() {
