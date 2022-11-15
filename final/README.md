@@ -55,7 +55,7 @@ program futása leáll.
 * Az egyes parancsokhoz lehetséges több szóból álló paraméter megadása úgy, 
 ha az adott paramétert idézőjelek közé írjuk. Például a következő parancs 
 a _Spirited Away_ című film létrehozására használható.
-```
+```cmd
 create movie "Sprited Away" animation 125
 ```
 
@@ -72,7 +72,7 @@ sign in privileged <felhasználónév> <jelszó>
 ```
 
 * Sikertelen bejelentkezés esetén a parancs kimenete a következő: :heavy_check_mark:
-```
+```cmd
 Login failed due to incorrect credentials
 ```
 * Sikeres bejelentkezés esetén hozzáférhetővé
@@ -81,7 +81,7 @@ vállnak az adminisztrációs parancsok (lásd később)
 ###### Az adminisztrátor ki tud jelentkezni
 
 * A következő parancs segítségével az adminisztrátor ki tud jelentkezni :heavy_check_mark:
-```
+```cmd
 sign out
 ```
 * A kijelentkezés után ne legyenek hozzáférhetőek az adminisztrációs parancsok,
@@ -91,15 +91,15 @@ amíg az adminisztrátor felhasználó újra be nem jelentkezik. :heavy_check_ma
 
 * A következő paranccsal lekérdezhető az éppen bejelentkezett
 account típusa és állapota. :heavy_check_mark:
-```
+```cmd
 describe account
 ```
 * Bejelentkezett adminisztrátor esetén a parancs kimenete: :heavy_check_mark:
-```
+```cmd
 Signed in with privileged account '<felhasználónév>'
 ```
 * Amennyiben a felhasználó nincs bejelentkezve, a parancs kimenete: :heavy_check_mark:
-```
+```cmd
 You are not signed in 
 ```
 
@@ -108,7 +108,7 @@ You are not signed in
 ###### Filmek létrehozása
 
 * A következő paranccsal új film hozható létre. :heavy_check_mark:
-```
+```cmd
 create movie <film címe> <műfaj> <vetítés hossza percben> 
 ``` 
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -116,14 +116,14 @@ adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 * A film címe azonosítja a filmet.
 
 Például:
-```
+```cmd
 create movie Sátántangó drama 450 
 ```
 
 ###### Filmek módosítása
 
 * A következő paranccsal egy már meglévő filmet módosíthatunk. :heavy_check_mark:
-```
+```cmd
 update movie <film címe> <műfaj> <vetítés hossza percben> 
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -133,7 +133,7 @@ adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 ###### Filmek törlése
 
 * A következő paranccsal egy már meglévő filmet törölhetünk. :heavy_check_mark:
-```
+```cmd
 delete movie <film címe>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -142,16 +142,16 @@ adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 ###### Filmek lekérdezése
 
 * A következő paranccsal a meglévő filmeket kérdezhetjük le :heavy_check_mark:
-```
+```cmd
 list movies
 ``` 
 * A parancs kimenete a következő, ha még nincs film elmentve: :heavy_check_mark:
-```
+```cmd
 There are no movies at the moment
 ```
 * Ha van film elmentve, akkor a parancs kimenetében szerepelnie kell az összes
 filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel. :heavy_check_mark:
-```
+```cmd
 <Film címe> (<műfaj>, <vetítés hossza percben> minutes)
 ```
 * Ez a parancs elérhető bármely bejelentkezett vagy nem bejelentkezett felhasználónak.
@@ -161,7 +161,7 @@ filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel. :
 ###### Terem létrehozása
 
 * A következő parancs lehetőséget biztosít vetítő termek létrehozására.
-```
+```cmd
 create room <terem neve> <széksorok száma> <szék oszlopok száma>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -171,7 +171,7 @@ adminisztrátor felhasználó számára elérhető.
 ###### Terem módosítása
 
 * A következő parancs lehetőséget biztosít már meglévő vetítő termek módosítására.
-```
+```cmd
 update room <terem neve> <széksorok száma> <szék oszlopok száma>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -181,7 +181,7 @@ adminisztrátor felhasználó számára elérhető.
 ###### Terem törlése
 
 * A következő parancs lehetővé teszi egy már meglévő vetítő terem törlését.
-```
+```cmd
 delete room <terem neve>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
@@ -190,7 +190,7 @@ adminisztrátor felhasználó számára elérhető.
 ###### Termek listázása
 
 * A következő parancs lehetővé teszi a termek listázását
-```
+```cmd
 list rooms
 ```
 * Amennyiben még nincs terem elmentve, a parancs kimenete a következő:
@@ -200,7 +200,7 @@ There are no rooms at the moment
 * Amennyiben már van terem elmentve, akkor a parancs kimenetében 
 szerepelnie kell minden teremnek. Minden sor egy termet ír le, az
 egyes sorok formátuma a következő:
-```
+```cmd
 Room <terem neve> with <székek száma> seats, <széksorok száma> rows and <szék oszlopok száma> columns 
 ``` 
 * Ez a parancs elérhető bármely bejelentkezett vagy nem bejelentkezett felhasználónak.
@@ -211,12 +211,12 @@ Room <terem neve> with <székek száma> seats, <széksorok száma> rows and <sz�
 
 * A következő parancs lehetőséget biztosít egy már létező film létező teremben történő
 vetítésének létrehozására egy adott időpontban.
-```
+```cmd
 create screening <film címe> <terem neve> <vetítés kezdetének dátuma és ideje, YYYY-MM-DD hh:mm formátumban>
 ```
 Például, ha a Pedersoli terem és a Spirited Away film léteznek, akkor egy vetítés a 2021-03-14 16:00 
 időpontban létrehozható a következőképpen:
-```
+```cmd
 create screening "Spirited Away" Pedersoli "2021-03-14 16:00"
 ```
 * Nem hozható létre a vetítés akkor, ha:
