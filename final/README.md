@@ -64,15 +64,15 @@ create movie "Sprited Away" animation 125
 ###### Admin account és bejelentkezés
 
 * Az alkalmazás indításakor létezik egy adminisztrátor account.
-    * A felhasználónév legyen 'admin', a jelszó szintén 'admin'.
+    * A felhasználónév legyen 'admin', a jelszó szintén 'admin'. :heavy_check_mark:
 * A következő parancs lehetőséget nyújt az adminisztátornak arra, hogy 
 bejelentkezzen
 ```
-sign in privileged <felhasználónév> <jelszó>
+sign in privileged <felhasználónév> <jelszó> :heavy_check_mark:
 ```
 * Sikertelen bejelentkezés esetén a parancs kimenete a következő:
 ```
-Login failed due to incorrect credentials
+Login failed due to incorrect credentials :heavy_check_mark:
 ```
 * Sikeres bejelentkezés esetén hozzáférhetővé
 vállnak az adminisztrációs parancsok (lásd később)
@@ -81,7 +81,7 @@ vállnak az adminisztrációs parancsok (lásd később)
 
 * A következő parancs segítségével az adminisztrátor ki tud jelentkezni
 ```
-sign out
+sign out :heavy_check_mark:
 ```
 * A kijelentkezés után ne legyenek hozzáférhetőek az adminisztrációs parancsok,
 amíg az adminisztrátor felhasználó újra be nem jelentkezik.
@@ -91,15 +91,15 @@ amíg az adminisztrátor felhasználó újra be nem jelentkezik.
 * A következő paranccsal lekérdezhető az éppen bejelentkezett
 account típusa és állapota.
 ```
-describe account
+describe account :heavy_check_mark:
 ```
 * Bejelentkezett adminisztrátor esetén a parancs kimenete:
 ```
-Signed in with privileged account '<felhasználónév>'
+Signed in with privileged account '<felhasználónév>' :heavy_check_mark:
 ```
 * Amennyiben a felhasználó nincs bejelentkezve, a parancs kimenete:
 ```
-You are not signed in
+You are not signed in :heavy_check_mark:
 ```
 
 ##### A vetített filmekről szóló adatok kezelése
@@ -108,50 +108,50 @@ You are not signed in
 
 * A következő paranccsal új film hozható létre.
 ```
-create movie <film címe> <műfaj> <vetítés hossza percben>
+create movie <film címe> <műfaj> <vetítés hossza percben> :heavy_check_mark:
 ``` 
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 * A film címe azonosítja a filmet.
 
 Például:
 ```
-create movie Sátántangó drama 450
+create movie Sátántangó drama 450 
 ```
 
 ###### Filmek módosítása
 
 * A következő paranccsal egy már meglévő filmet módosíthatunk.
 ```
-update movie <film címe> <műfaj> <vetítés hossza percben>
+update movie <film címe> <műfaj> <vetítés hossza percben> :heavy_check_mark:
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 * A film címe azonosítja a filmet
 
 ###### Filmek törlése
 
 * A következő paranccsal egy már meglévő filmet törölhetünk.
 ```
-delete movie <film címe>
+delete movie <film címe> :heavy_check_mark:
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 
 ###### Filmek lekérdezése
 
 * A következő paranccsal a meglévő filmeket kérdezhetjük le
 ```
-list movies
+list movies :heavy_check_mark:
 ``` 
 * A parancs kimenete a következő, ha még nincs film elmentve:
 ```
-There are no movies at the moment
+There are no movies at the moment :heavy_check_mark:
 ```
 * Ha van film elmentve, akkor a parancs kimenetében szerepelnie kell az összes
 filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel.
 ```
-<Film címe> (<műfaj>, <vetítés hossza percben> minutes)
+<Film címe> (<műfaj>, <vetítés hossza percben> minutes) :heavy_check_mark:
 ```
 * Ez a parancs elérhető bármely bejelentkezett vagy nem bejelentkezett felhasználónak.
 
