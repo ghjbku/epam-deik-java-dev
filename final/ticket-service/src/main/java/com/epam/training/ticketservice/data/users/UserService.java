@@ -1,6 +1,6 @@
-package com.epam.training.ticketservice.data.user;
+package com.epam.training.ticketservice.data.users;
 
-import com.epam.training.ticketservice.data.user.model.UserDto;
+import com.epam.training.ticketservice.data.users.model.UserDto;
 
 import java.util.Optional;
 

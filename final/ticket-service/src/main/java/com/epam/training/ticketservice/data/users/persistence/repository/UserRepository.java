@@ -1,7 +1,7 @@
-package com.epam.training.ticketservice.data.user.persistence.repository;
+package com.epam.training.ticketservice.data.users.persistence.repository;
 
 
-import com.epam.training.ticketservice.data.user.persistence.entity.User;
+import com.epam.training.ticketservice.data.users.persistence.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

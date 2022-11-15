@@ -64,4 +64,8 @@ public class MovieServiceImpl implements MovieService {
 
         return Optional.of(movieDtos);
     }
+
+    public Optional<Movie> getSpecificMovie(String name){
+        return movieRepository.findByName(name);
+    }
 }

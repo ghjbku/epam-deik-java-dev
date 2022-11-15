@@ -1,7 +1,7 @@
 package com.epam.training.ticketservice.presentation.commands;
 
-import com.epam.training.ticketservice.data.user.UserService;
-import com.epam.training.ticketservice.data.user.model.UserDto;
+import com.epam.training.ticketservice.data.users.UserService;
+import com.epam.training.ticketservice.data.users.model.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;

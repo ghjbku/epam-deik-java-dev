@@ -2,9 +2,9 @@ package com.epam.training.ticketservice.presentation.commands;
 
 import com.epam.training.ticketservice.data.movies.MovieService;
 import com.epam.training.ticketservice.data.movies.model.MovieDto;
-import com.epam.training.ticketservice.data.user.UserService;
-import com.epam.training.ticketservice.data.user.model.UserDto;
-import com.epam.training.ticketservice.data.user.persistence.entity.User;
+import com.epam.training.ticketservice.data.users.UserService;
+import com.epam.training.ticketservice.data.users.model.UserDto;
+import com.epam.training.ticketservice.data.users.persistence.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
