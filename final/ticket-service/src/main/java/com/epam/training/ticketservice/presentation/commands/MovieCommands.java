@@ -15,11 +15,13 @@ public class MovieCommands {
 
     private final MovieService movieService;
 
+    @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create movie", value = "create movie <film címe> <műfaj> <vetítés hossza percben>")
     public void createMovie(String name, String genre, int len) {
         movieService.create(name, genre, len);
     }
 
+    @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "update movie", value = "update movie <film címe> <műfaj> <vetítés hossza percben>")
     public String updateMovie(String name, String genre, int len) {
         Optional<MovieDto> updated = movieService.update(name, genre, len);
@@ -30,6 +32,7 @@ public class MovieCommands {
         return "movie with name '" + updated.get().getMovieName() + "' was updated";
     }
 
+    @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "delete movie", value = "delete movie <film címe>")
     public String deleteMovie(String name) {
         return movieService.delete(name);
@@ -51,5 +54,12 @@ public class MovieCommands {
         }
 
         return toReturn.deleteCharAt(toReturn.length()-1).toString();
+    }
+    
+    private Availability isAvailable() {
+        Optional<UserDto> user = userService.describe();
+        return user.isPresent() && user.get().getRole() == User.Role.ADMIN
+            ? Availability.available()
+            : Availability.unavailable("You are not an admin!");
     }
 }
