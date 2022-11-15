@@ -66,49 +66,50 @@ create movie "Sprited Away" animation 125
 * Az alkalmazás indításakor létezik egy adminisztrátor account.
     * A felhasználónév legyen 'admin', a jelszó szintén 'admin'. :heavy_check_mark:
 * A következő parancs lehetőséget nyújt az adminisztátornak arra, hogy 
-bejelentkezzen
+bejelentkezzen :heavy_check_mark:
+```cmd
+sign in privileged <felhasználónév> <jelszó> 
 ```
-sign in privileged <felhasználónév> <jelszó> :heavy_check_mark:
+
+* Sikertelen bejelentkezés esetén a parancs kimenete a következő: :heavy_check_mark:
 ```
-* Sikertelen bejelentkezés esetén a parancs kimenete a következő:
-```
-Login failed due to incorrect credentials :heavy_check_mark:
+Login failed due to incorrect credentials
 ```
 * Sikeres bejelentkezés esetén hozzáférhetővé
 vállnak az adminisztrációs parancsok (lásd később)
 
 ###### Az adminisztrátor ki tud jelentkezni
 
-* A következő parancs segítségével az adminisztrátor ki tud jelentkezni
+* A következő parancs segítségével az adminisztrátor ki tud jelentkezni :heavy_check_mark:
 ```
-sign out :heavy_check_mark:
+sign out
 ```
 * A kijelentkezés után ne legyenek hozzáférhetőek az adminisztrációs parancsok,
-amíg az adminisztrátor felhasználó újra be nem jelentkezik.
+amíg az adminisztrátor felhasználó újra be nem jelentkezik. :heavy_check_mark:
 
 ###### Az adminisztrátor account információi lekérdezhetőek
 
 * A következő paranccsal lekérdezhető az éppen bejelentkezett
-account típusa és állapota.
+account típusa és állapota. :heavy_check_mark:
 ```
-describe account :heavy_check_mark:
+describe account
 ```
-* Bejelentkezett adminisztrátor esetén a parancs kimenete:
+* Bejelentkezett adminisztrátor esetén a parancs kimenete: :heavy_check_mark:
 ```
-Signed in with privileged account '<felhasználónév>' :heavy_check_mark:
+Signed in with privileged account '<felhasználónév>'
 ```
-* Amennyiben a felhasználó nincs bejelentkezve, a parancs kimenete:
+* Amennyiben a felhasználó nincs bejelentkezve, a parancs kimenete: :heavy_check_mark:
 ```
-You are not signed in :heavy_check_mark:
+You are not signed in 
 ```
 
 ##### A vetített filmekről szóló adatok kezelése
 
 ###### Filmek létrehozása
 
-* A következő paranccsal új film hozható létre.
+* A következő paranccsal új film hozható létre. :heavy_check_mark:
 ```
-create movie <film címe> <műfaj> <vetítés hossza percben> :heavy_check_mark:
+create movie <film címe> <műfaj> <vetítés hossza percben> 
 ``` 
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
 adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
@@ -121,9 +122,9 @@ create movie Sátántangó drama 450
 
 ###### Filmek módosítása
 
-* A következő paranccsal egy már meglévő filmet módosíthatunk.
+* A következő paranccsal egy már meglévő filmet módosíthatunk. :heavy_check_mark:
 ```
-update movie <film címe> <műfaj> <vetítés hossza percben> :heavy_check_mark:
+update movie <film címe> <műfaj> <vetítés hossza percben> 
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
 adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
@@ -131,27 +132,27 @@ adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 
 ###### Filmek törlése
 
-* A következő paranccsal egy már meglévő filmet törölhetünk.
+* A következő paranccsal egy már meglévő filmet törölhetünk. :heavy_check_mark:
 ```
-delete movie <film címe> :heavy_check_mark:
+delete movie <film címe>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
 adminisztrátor felhasználó számára elérhető. :heavy_check_mark:
 
 ###### Filmek lekérdezése
 
-* A következő paranccsal a meglévő filmeket kérdezhetjük le
+* A következő paranccsal a meglévő filmeket kérdezhetjük le :heavy_check_mark:
 ```
-list movies :heavy_check_mark:
+list movies
 ``` 
-* A parancs kimenete a következő, ha még nincs film elmentve:
+* A parancs kimenete a következő, ha még nincs film elmentve: :heavy_check_mark:
 ```
-There are no movies at the moment :heavy_check_mark:
+There are no movies at the moment
 ```
 * Ha van film elmentve, akkor a parancs kimenetében szerepelnie kell az összes
-filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel.
+filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel. :heavy_check_mark:
 ```
-<Film címe> (<műfaj>, <vetítés hossza percben> minutes) :heavy_check_mark:
+<Film címe> (<műfaj>, <vetítés hossza percben> minutes)
 ```
 * Ez a parancs elérhető bármely bejelentkezett vagy nem bejelentkezett felhasználónak.
 
