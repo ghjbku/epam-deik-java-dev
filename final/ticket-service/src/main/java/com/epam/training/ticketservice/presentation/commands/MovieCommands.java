@@ -2,9 +2,14 @@ package com.epam.training.ticketservice.presentation.commands;
 
 import com.epam.training.ticketservice.data.movies.MovieService;
 import com.epam.training.ticketservice.data.movies.model.MovieDto;
+import com.epam.training.ticketservice.data.user.UserService;
+import com.epam.training.ticketservice.data.user.model.UserDto;
+import com.epam.training.ticketservice.data.user.persistence.entity.User;
 import lombok.AllArgsConstructor;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +19,7 @@ import java.util.Optional;
 public class MovieCommands {
 
     private final MovieService movieService;
+    private final UserService userService;
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create movie", value = "create movie <film címe> <műfaj> <vetítés hossza percben>")
@@ -55,11 +61,11 @@ public class MovieCommands {
 
         return toReturn.deleteCharAt(toReturn.length()-1).toString();
     }
-    
+
     private Availability isAvailable() {
         Optional<UserDto> user = userService.describe();
         return user.isPresent() && user.get().getRole() == User.Role.ADMIN
-            ? Availability.available()
-            : Availability.unavailable("You are not an admin!");
+                ? Availability.available()
+                : Availability.unavailable("You are not an admin!");
     }
 }
