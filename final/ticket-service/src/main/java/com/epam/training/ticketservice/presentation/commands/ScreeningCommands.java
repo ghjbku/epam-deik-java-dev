@@ -18,6 +18,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,8 @@ public class ScreeningCommands {
     private final MovieService movieService;
     private final RoomService roomService;
     private final UserService userService;
+
+    private final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private MovieDto getMovie(String movieName) {
         Optional<Movie> movie = movieService.getSpecificMovie(movieName);
@@ -59,25 +62,39 @@ public class ScreeningCommands {
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create screening",
             value = "create screening <film címe> <terem neve> <vetítés kezdete YYYY-MM-DD hh:mm formátumban>")
-    public String createScreening(String movieName, String roomName, Date screeningDate) {
+    public String createScreening(String movieName, String roomName, String screeningDate) {
         RoomDto room = getRoom(roomName);
         MovieDto movie = getMovie(movieName);
-        Screening screening = screeningService.getSpecificScreening(movieName, roomName, screeningDate);
+
+        Date formattedDate = new Date();
+        try {
+            formattedDate = sf.parse(screeningDate);
+        } catch (java.text.ParseException exc) {
+            exc.printStackTrace();
+        }
+        Screening screening = screeningService.getSpecificScreening(movieName, roomName, formattedDate);
+
         if (screening == null) {
-            screeningService.create(movieName, roomName, screeningDate);
+            screeningService.create(movieName, roomName, formattedDate);
             return "screening created";
         } else if (checkIfScreeningTimeBad(screening, movie)) {
             return "This would start in the break period after another screening in this room";
         }
         return "There is an overlapping screening";
-
     }
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "delete screening",
             value = "delete screening <film címe> <terem neve> <vetítés kezdete YYYY-MM-DD hh:mm formátumban>")
-    public String deleteScreening(String movieName, String roomName, Date screeningDate) {
-        return screeningService.delete(movieName, roomName, screeningDate);
+    public String deleteScreening(String movieName, String roomName, String screeningDate) {
+        Date formattedDate = new Date();
+        try {
+            formattedDate = sf.parse(screeningDate);
+        } catch (java.text.ParseException exc) {
+            exc.printStackTrace();
+        }
+        return screeningService.delete(movieName, roomName, formattedDate);
+
     }
 
     @ShellMethod(key = "list screenings", value = "returns all screenings")

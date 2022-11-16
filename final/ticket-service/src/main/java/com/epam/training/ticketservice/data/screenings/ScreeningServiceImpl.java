@@ -23,8 +23,7 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     @Override
     public void create(String movieName, String roomName, Date screeningDate) {
-        Screening newScreening = new Screening(null, movieService.getSpecificMovie(movieName).get(),
-                roomService.getSpecificRoom(roomName).get(), screeningDate);
+        Screening newScreening = new Screening(null, movieName,roomName, screeningDate);
         screeningRepository.save(newScreening);
     }
 
@@ -49,8 +48,8 @@ public class ScreeningServiceImpl implements ScreeningService {
         }
         List<ScreeningDto> screeningDtos = new ArrayList<>();
         allScreenings.forEach(screening -> {
-            screeningDtos.add(new ScreeningDto(screening.getMovie().getName(),
-                    screening.getRoom().getName(), screening.getScreeningDate()));
+            screeningDtos.add(new ScreeningDto(screening.getMovieName(),
+                    screening.getRoomName(), screening.getScreeningDate()));
         });
 
         return Optional.of(screeningDtos);

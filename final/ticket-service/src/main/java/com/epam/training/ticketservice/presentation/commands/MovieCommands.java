@@ -23,8 +23,9 @@ public class MovieCommands {
 
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "create movie", value = "create movie <film címe> <műfaj> <vetítés hossza percben>")
-    public void createMovie(String name, String genre, int len) {
+    public String createMovie(String name, String genre, int len) {
         movieService.create(name, genre, len);
+        return "movie with name '" + name + "' was created";
     }
 
     @ShellMethodAvailability("isAvailable")
