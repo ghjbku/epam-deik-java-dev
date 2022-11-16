@@ -17,4 +17,6 @@ public interface ScreeningService {
 
     Screening getSpecificScreening(String movieName, String roomName);
 
+    List<Screening> getSpecificScreeningByRoom(String roomName);
+
 }

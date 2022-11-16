@@ -58,4 +58,12 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         return toReturn.orElse(null);
     }
+
+    @Override
+    public List<Screening> getSpecificScreeningByRoom(String roomName) {
+        Optional<List<Screening>> toReturn = screeningRepository
+                .findByRoomRoomName(roomName);
+
+        return toReturn.orElse(null);
+    }
 }
