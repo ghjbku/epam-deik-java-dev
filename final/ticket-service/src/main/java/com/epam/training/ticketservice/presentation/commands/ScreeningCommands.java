@@ -113,11 +113,12 @@ public class ScreeningCommands {
                     .append(Objects.requireNonNull(getMovie(screening.getMovieName())).getGenre())
                     .append(", ")
                     .append(Objects.requireNonNull(getMovie(screening.getMovieName())).getMovieLength())
-                    .append(" minutes, screened in room ")
+                    .append(" minutes), screened in room ")
                     .append(screening.getRoomName())
                     .append(", at ")
-                    .append(screening.getScreeningDate())
+                    .append(sf.format(screening.getScreeningDate()))
                     .append("\n");
+
         }
 
         return toReturn.deleteCharAt(toReturn.length() - 1).toString();
