@@ -56,7 +56,7 @@ public class RoomCommands {
             toReturn.append("Room ")
                     .append(room.getRoomName())
                     .append(" with ")
-                    .append(room.getChairColumnNumber()*room.getChairRowNumber())
+                    .append(room.getChairColumnNumber() * room.getChairRowNumber())
                     .append(" seats, ")
                     .append(room.getChairRowNumber())
                     .append(" rows and ")

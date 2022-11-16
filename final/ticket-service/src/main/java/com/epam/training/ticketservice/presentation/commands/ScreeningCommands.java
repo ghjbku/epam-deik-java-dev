@@ -57,7 +57,8 @@ public class ScreeningCommands {
     }
 
     @ShellMethodAvailability("isAvailable")
-    @ShellMethod(key = "create screening", value = "create screening <film címe> <terem neve> <vetítés kezdetének dátuma és ideje, YYYY-MM-DD hh:mm formátumban>")
+    @ShellMethod(key = "create screening",
+            value = "create screening <film címe> <terem neve> <vetítés kezdete YYYY-MM-DD hh:mm formátumban>")
     public String createScreening(String movieName, String roomName, Date screeningDate) {
         RoomDto room = getRoom(roomName);
         MovieDto movie = getMovie(movieName);
@@ -73,11 +74,10 @@ public class ScreeningCommands {
     }
 
     @ShellMethodAvailability("isAvailable")
-    @ShellMethod(key = "delete screening", value = "delete screening <film címe> <terem neve> <vetítés kezdetének dátuma és ideje, YYYY-MM-DD hh:mm formátumban>")
+    @ShellMethod(key = "delete screening",
+            value = "delete screening <film címe> <terem neve> <vetítés kezdete YYYY-MM-DD hh:mm formátumban>")
     public String deleteScreening(String movieName, String roomName, Date screeningDate) {
-        RoomDto room = getRoom(roomName);
-        MovieDto movie = getMovie(movieName);
-        return screeningService.delete(movie, room, screeningDate);
+        return screeningService.delete(movieName, roomName, screeningDate);
     }
 
     @ShellMethod(key = "list screenings", value = "returns all screenings")

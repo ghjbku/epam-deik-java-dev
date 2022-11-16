@@ -1,9 +1,7 @@
 package com.epam.training.ticketservice.data.screenings;
 
 import com.epam.training.ticketservice.data.movies.MovieService;
-import com.epam.training.ticketservice.data.movies.persistence.entity.Movie;
 import com.epam.training.ticketservice.data.rooms.RoomService;
-import com.epam.training.ticketservice.data.rooms.persistence.entity.Room;
 import com.epam.training.ticketservice.data.screenings.model.ScreeningDto;
 import com.epam.training.ticketservice.data.screenings.persistence.entity.Screening;
 import com.epam.training.ticketservice.data.screenings.persistence.repository.ScreeningRepository;
@@ -31,15 +29,16 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public String delete(Movie movie, Room room, Date screeningDate) {
-        Optional<Screening> roomToDelete = screeningRepository.findByMovieMovieRoomRoomAndScreeningDate(movie, room, screeningDate);
+    public String delete(String movieName, String roomName, Date screeningDate) {
+        Optional<Screening> roomToDelete = screeningRepository
+                .findByMovieMovieNameRoomRoomNameAndScreeningDate(movieName, roomName, screeningDate);
         if (roomToDelete.isEmpty()) {
             return "nothing to delete";
         }
 
         screeningRepository.delete(roomToDelete.get());
 
-        return "deleted the Screening in room '" + room.getName() + " ' at " + screeningDate + " with the movie " + movie.getName();
+        return "deleted the Screening in room '" + roomName + " ' at " + screeningDate + " with the movie " + movieName;
     }
 
     @Override
@@ -59,8 +58,8 @@ public class ScreeningServiceImpl implements ScreeningService {
 
     @Override
     public Screening getSpecificScreening(String movieName, String roomName, Date screeningDate) {
-        Optional<Screening> toReturn = screeningRepository.
-                findByMovieNameRoomNameAndScreeningDate(movieName, roomName, screeningDate);
+        Optional<Screening> toReturn = screeningRepository
+                .findByMovieMovieNameRoomRoomNameAndScreeningDate(movieName, roomName, screeningDate);
 
         return toReturn.orElse(null);
     }
