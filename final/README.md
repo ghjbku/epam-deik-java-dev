@@ -160,46 +160,46 @@ filmnek. Minden sor egy-egy filmet ír le és a következőképpen épül fel. :
 
 ###### Terem létrehozása
 
-* A következő parancs lehetőséget biztosít vetítő termek létrehozására.
+* A következő parancs lehetőséget biztosít vetítő termek létrehozására.:heavy_check_mark:
 ```cmd
 create room <terem neve> <széksorok száma> <szék oszlopok száma>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető.:heavy_check_mark:
 * A terem neve azonosítja a termet
 
 ###### Terem módosítása
 
-* A következő parancs lehetőséget biztosít már meglévő vetítő termek módosítására.
+* A következő parancs lehetőséget biztosít már meglévő vetítő termek módosítására.:heavy_check_mark:
 ```cmd
 update room <terem neve> <széksorok száma> <szék oszlopok száma>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető.:heavy_check_mark:
 * A terem neve azonosítja a termet
 
 ###### Terem törlése
 
-* A következő parancs lehetővé teszi egy már meglévő vetítő terem törlését.
+* A következő parancs lehetővé teszi egy már meglévő vetítő terem törlését.:heavy_check_mark:
 ```cmd
 delete room <terem neve>
 ```
 * A parancs adminisztrációs parancs, így csak bejelentkezett 
-adminisztrátor felhasználó számára elérhető.
+adminisztrátor felhasználó számára elérhető.:heavy_check_mark:
 
 ###### Termek listázása
 
-* A következő parancs lehetővé teszi a termek listázását
+* A következő parancs lehetővé teszi a termek listázását:heavy_check_mark:
 ```cmd
 list rooms
 ```
-* Amennyiben még nincs terem elmentve, a parancs kimenete a következő:
+* Amennyiben még nincs terem elmentve, a parancs kimenete a következő::heavy_check_mark:
 ```
 There are no rooms at the moment
 ```
 * Amennyiben már van terem elmentve, akkor a parancs kimenetében 
 szerepelnie kell minden teremnek. Minden sor egy termet ír le, az
-egyes sorok formátuma a következő:
+egyes sorok formátuma a következő::heavy_check_mark:
 ```cmd
 Room <terem neve> with <székek száma> seats, <széksorok száma> rows and <szék oszlopok száma> columns 
 ``` 
