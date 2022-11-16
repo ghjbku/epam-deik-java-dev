@@ -29,7 +29,8 @@ public class UserCommands {
         if (user.isEmpty()) {
             return "Login failed due to incorrect credentials";
         }
-        return user.get().getUsername() + " is successfully logged in! Your role is: " + user.get().getRole();
+        //Signed in with privileged account 'admin'
+        return "Signed in with privileged account '" + user.get().getUsername() + "'";
     }
 
     @ShellMethod(key = "describe account", value = "Get user information")

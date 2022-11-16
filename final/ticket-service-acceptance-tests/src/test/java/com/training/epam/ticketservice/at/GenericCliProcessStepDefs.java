@@ -1,20 +1,20 @@
 package com.training.epam.ticketservice.at;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class GenericCliProcessStepDefs {
 
-    private static final int OUTPUT_TIMEOUT = 15000;
+    private static final int OUTPUT_TIMEOUT = 19000;
 
     private ProcessUnderTest cliProcess;
 

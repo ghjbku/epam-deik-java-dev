@@ -37,26 +37,42 @@ public class ScreeningCommands {
 
     private MovieDto getMovie(String movieName) {
         Optional<Movie> movie = movieService.getSpecificMovie(movieName);
-        if (movie.isPresent()) {
-            return new MovieDto(movie.get().getName(), movie.get().getGenre(), movie.get().getMovieLength());
-        }
-        return null;
+        return movie.map(value -> new MovieDto(value.getName(), value.getGenre(), value.getMovieLength())).orElse(null);
     }
 
     private RoomDto getRoom(String roomName) {
         Optional<Room> room = roomService.getSpecificRoom(roomName);
-        if (room.isPresent()) {
-            return new RoomDto(room.get().getName(), room.get().getChairRowNumber(), room.get().getChairColumnNumber());
-        }
-        return null;
+        return room.map(value -> new RoomDto(value.getName(), value.getChairRowNumber(), value.getChairColumnNumber())).orElse(null);
     }
 
-    private boolean checkIfScreeningTimeBad(Screening screening, MovieDto movieDto) {
+    private boolean checkIfScreeningTimeOverlaps(Screening fetchedScreening, MovieDto movieDto,
+                                                 Date newScreeningTime) {
 
-        if (screening.getScreeningDate().getTime() < movieDto.getMovieLength() + 10) {
-            return true;
-        }
-        return false;
+        int fetchedFullScreenTimeInMinutes = fetchedScreening.getScreeningDate().getHours() * 60
+                + fetchedScreening.getScreeningDate().getMinutes();
+        int newFullScreenTimeInMinutes = newScreeningTime.getHours() * 60
+                + newScreeningTime.getMinutes();
+
+        System.out.println(fetchedFullScreenTimeInMinutes);
+        System.out.println(newFullScreenTimeInMinutes);
+
+        return newFullScreenTimeInMinutes <= movieDto.getMovieLength() + fetchedFullScreenTimeInMinutes
+                & newFullScreenTimeInMinutes >= fetchedFullScreenTimeInMinutes - 10;
+    }
+
+    private boolean checkIfNewScreeningTimeNotOver10mins(Screening fetchedScreening, MovieDto movieDto,
+                                                         Date newScreeningTime) {
+
+        int fetchedFullScreenTimeInMinutes = fetchedScreening.getScreeningDate().getHours() * 60
+                + fetchedScreening.getScreeningDate().getMinutes();
+        int newFullScreenTimeInMinutes = newScreeningTime.getHours() * 60
+                + newScreeningTime.getMinutes();
+
+        System.out.println(fetchedFullScreenTimeInMinutes);
+        System.out.println(newFullScreenTimeInMinutes);
+
+        return newFullScreenTimeInMinutes <= movieDto.getMovieLength() + fetchedFullScreenTimeInMinutes + 10
+                & newFullScreenTimeInMinutes >= fetchedFullScreenTimeInMinutes - 10;
     }
 
     @ShellMethodAvailability("isAvailable")
@@ -69,18 +85,21 @@ public class ScreeningCommands {
         Date formattedDate = new Date();
         try {
             formattedDate = sf.parse(screeningDate);
-        } catch (java.text.ParseException exc) {
-            exc.printStackTrace();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
         }
-        Screening screening = screeningService.getSpecificScreening(movieName, roomName, formattedDate);
+        Screening screening = screeningService.getSpecificScreening(movieName, roomName);
 
         if (screening == null) {
             screeningService.create(movieName, roomName, formattedDate);
             return "screening created";
-        } else if (checkIfScreeningTimeBad(screening, movie)) {
+        } else if (checkIfScreeningTimeOverlaps(screening, movie, formattedDate)) {
+            return "There is an overlapping screening";
+        } else if (checkIfNewScreeningTimeNotOver10mins(screening, movie, formattedDate)) {
             return "This would start in the break period after another screening in this room";
         }
-        return "There is an overlapping screening";
+        screeningService.create(movieName, roomName, formattedDate);
+        return "screening created";
     }
 
     @ShellMethodAvailability("isAvailable")
@@ -105,8 +124,7 @@ public class ScreeningCommands {
             return "There are no screenings";
         }
         StringBuilder toReturn = new StringBuilder();
-        //<A film címe> (<műfaj>, <vetítés ideje percben> minutes),
-        // screened in room <terem neve>, at <vetítés kezdetének dátuma és ideje, YYYY-MM-DD hh:mm formátumban>
+
         for (ScreeningDto screening : listOfScreenings.get()) {
             toReturn.append(screening.getMovieName())
                     .append(" (")

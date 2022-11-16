@@ -1,7 +1,5 @@
 package com.epam.training.ticketservice.data.screenings;
 
-import com.epam.training.ticketservice.data.movies.MovieService;
-import com.epam.training.ticketservice.data.rooms.RoomService;
 import com.epam.training.ticketservice.data.screenings.model.ScreeningDto;
 import com.epam.training.ticketservice.data.screenings.persistence.entity.Screening;
 import com.epam.training.ticketservice.data.screenings.persistence.repository.ScreeningRepository;
@@ -18,12 +16,10 @@ import java.util.Optional;
 public class ScreeningServiceImpl implements ScreeningService {
 
     private final ScreeningRepository screeningRepository;
-    private final MovieService movieService;
-    private final RoomService roomService;
 
     @Override
     public void create(String movieName, String roomName, Date screeningDate) {
-        Screening newScreening = new Screening(null, movieName,roomName, screeningDate);
+        Screening newScreening = new Screening(null, movieName, roomName, screeningDate);
         screeningRepository.save(newScreening);
     }
 
@@ -56,9 +52,9 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public Screening getSpecificScreening(String movieName, String roomName, Date screeningDate) {
+    public Screening getSpecificScreening(String movieName, String roomName) {
         Optional<Screening> toReturn = screeningRepository
-                .findByMovieMovieNameRoomRoomNameAndScreeningDate(movieName, roomName, screeningDate);
+                .findByMovieMovieNameRoomRoomName(movieName, roomName);
 
         return toReturn.orElse(null);
     }

@@ -15,6 +15,6 @@ public interface ScreeningService {
 
     Optional<List<ScreeningDto>> listAll();
 
-    Screening getSpecificScreening(String movieName, String roomName, Date screeningDate);
+    Screening getSpecificScreening(String movieName, String roomName);
 
 }
