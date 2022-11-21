@@ -66,8 +66,8 @@ public class ScreeningCommands {
     private boolean checkIfNewScreeningTimeNotOver10Mins(List<Screening> fetchedScreening, MovieDto movieDto,
                                                          String roomName, Date newScreeningTime) {
 
-        int newFullScreenTimeInMinutes = 0;
-        int fetchedFullScreenTimeInMinutes = 0;
+        long newFullScreenTimeInMinutes = 0;
+        long fetchedFullScreenTimeInMinutes = 0;
         List<Screening> sameRoom = fetchedScreening.stream().filter(screening -> screening.getRoomName()
                 .equals(roomName)).collect(Collectors.toList());
 
@@ -75,12 +75,10 @@ public class ScreeningCommands {
             return false;
         }
 
-        newFullScreenTimeInMinutes = newScreeningTime.getHours() * 60
-                + newScreeningTime.getMinutes();
+        newFullScreenTimeInMinutes = (newScreeningTime.getTime() / 1000) / 60;
 
         for (Screening screening : sameRoom) {
-            fetchedFullScreenTimeInMinutes = screening.getScreeningDate().getHours() * 60
-                    + screening.getScreeningDate().getMinutes();
+            fetchedFullScreenTimeInMinutes = (screening.getScreeningDate().getTime() / 1000) / 60;
 
             if (newFullScreenTimeInMinutes <= (getMovie(screening.getMovieName()).getMovieLength()
                     + fetchedFullScreenTimeInMinutes + 10)
