@@ -39,8 +39,8 @@ public class ScreeningCommands {
 
     private boolean checkIfScreeningTimeOverlaps(List<Screening> fetchedScreening, MovieDto movieDto,
                                                  String roomName, Date newScreeningTime) {
-        int newFullScreenTimeInMinutes = 0;
-        int fetchedFullScreenTimeInMinutes = 0;
+        long newFullScreenTimeInMinutes = 0;
+        long fetchedFullScreenTimeInMinutes = 0;
         List<Screening> sameRoom = fetchedScreening.stream().filter(screening -> screening.getRoomName()
                 .equals(roomName)).collect(Collectors.toList());
 
@@ -48,12 +48,10 @@ public class ScreeningCommands {
             return false;
         }
 
-        newFullScreenTimeInMinutes = newScreeningTime.getHours() * 60
-                + newScreeningTime.getMinutes();
+        newFullScreenTimeInMinutes = (newScreeningTime.getTime() / 1000) / 60;
 
         for (Screening screening : sameRoom) {
-            fetchedFullScreenTimeInMinutes = screening.getScreeningDate().getHours() * 60
-                    + screening.getScreeningDate().getMinutes();
+            fetchedFullScreenTimeInMinutes = (screening.getScreeningDate().getTime() / 1000) / 60;
 
             if (newFullScreenTimeInMinutes <= movieDto.getMovieLength() + fetchedFullScreenTimeInMinutes
                     & newFullScreenTimeInMinutes >= fetchedFullScreenTimeInMinutes - 10) {
@@ -118,14 +116,15 @@ public class ScreeningCommands {
     @ShellMethodAvailability("isAvailable")
     @ShellMethod(key = "delete screening",
             value = "delete screening <film címe> <terem neve> <vetítés kezdete YYYY-MM-DD hh:mm formátumban>")
-    public String deleteScreening(String movieName, String roomName, String screeningDate) {
+    public void deleteScreening(String movieName, String roomName, String screeningDate) {
         Date formattedDate = new Date();
         try {
             formattedDate = sf.parse(screeningDate);
         } catch (java.text.ParseException exc) {
             exc.printStackTrace();
         }
-        return screeningService.delete(movieName, roomName, formattedDate);
+
+        screeningService.delete(movieName, roomName, formattedDate);
 
     }
 
@@ -149,7 +148,6 @@ public class ScreeningCommands {
                     .append(", at ")
                     .append(sf.format(screening.getScreeningDate()))
                     .append("\n");
-
         }
 
         return toReturn.deleteCharAt(toReturn.length() - 1).toString();

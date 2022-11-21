@@ -11,7 +11,7 @@ public interface ScreeningService {
 
     void create(String movieName, String roomName, Date screeningDate);
 
-    String delete(String movieName, String roomName, Date screeningDate);
+    void delete(String movieName, String roomName, Date screeningDate);
 
     Optional<List<ScreeningDto>> listAll();
 

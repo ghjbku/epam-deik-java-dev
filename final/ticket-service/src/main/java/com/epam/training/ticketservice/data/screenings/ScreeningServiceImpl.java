@@ -24,16 +24,12 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
 
     @Override
-    public String delete(String movieName, String roomName, Date screeningDate) {
+    public void delete(String movieName, String roomName, Date screeningDate) {
         Optional<Screening> roomToDelete = screeningRepository
                 .findByMovieMovieNameRoomRoomNameAndScreeningDate(movieName, roomName, screeningDate);
-        if (roomToDelete.isEmpty()) {
-            return "nothing to delete";
-        }
 
-        screeningRepository.delete(roomToDelete.get());
+        roomToDelete.ifPresent(screeningRepository::delete);
 
-        return "deleted the Screening in room '" + roomName + " ' at " + screeningDate + " with the movie " + movieName;
     }
 
     @Override
