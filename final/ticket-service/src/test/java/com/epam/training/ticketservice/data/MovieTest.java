@@ -1,4 +1,4 @@
-package com.epam.training.ticketservice.presentation.commands;
+package com.epam.training.ticketservice.data;
 
 import com.epam.training.ticketservice.data.movies.MovieService;
 import com.epam.training.ticketservice.data.movies.MovieServiceImpl;
@@ -102,6 +102,7 @@ public class MovieTest {
     public void testListAllMovieShouldReturnNonEmpty() {
         //given
         Movie testMovie = new Movie("test", "drama", 1);
+        MovieDto testDto = new MovieDto(testMovie.getName(), testMovie.getGenre(), testMovie.getMovieLength());
 
         //when
         when(movieRepository.findAll()).thenReturn(List.of(testMovie));
@@ -111,6 +112,10 @@ public class MovieTest {
         //then
         Mockito.verify(movieRepository).findAll();
         Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(result.get().get(0).getMovieName(), testDto.getMovieName());
+        Assertions.assertEquals(result.get().get(0).getGenre(), testDto.getGenre());
+        Assertions.assertEquals(result.get().get(0).getMovieLength(), testDto.getMovieLength());
+
     }
 
     @Test
