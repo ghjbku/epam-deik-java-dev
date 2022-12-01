@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -22,14 +23,14 @@ public class MovieTest {
     private final MovieService underTest = new MovieServiceImpl(movieRepository);
 
     @Test
-    public void testCreateMovieShouldBeSuccessful(){
+    public void testCreateMovieShouldBeSuccessful() {
         //given
-        Movie testMovie = new Movie("test","drama",1);
+        Movie testMovie = new Movie("test", "drama", 1);
 
         //when
         when(movieRepository.save(any())).thenReturn(new Movie());
 
-        underTest.create(testMovie.getName(),testMovie.getGenre(),testMovie.getMovieLength());
+        underTest.create(testMovie.getName(), testMovie.getGenre(), testMovie.getMovieLength());
 
         //then
         Mockito.verify(movieRepository).save(testMovie);
@@ -45,15 +46,16 @@ public class MovieTest {
         when(movieRepository.findByName(any())).thenReturn(Optional.of(testMovie));
 
         Optional<MovieDto> returnedDto = underTest
-                                        .update(testMovie.getName(),testMovie.getGenre(),2);
+                .update(testMovie.getName(), testMovie.getGenre(), 2);
 
         //then
         Mockito.verify(movieRepository).save(testMovie);
-        Assertions.assertEquals(returnedDto.get().getMovieLength(),2);
+        Assertions.assertTrue(returnedDto.isPresent());
+        Assertions.assertEquals(returnedDto.get().getMovieLength(), 2);
     }
 
     @Test
-    public void testUpdateMovieShouldReturnOptionalEmpty(){
+    public void testUpdateMovieShouldReturnOptionalEmpty() {
         //given
         Movie testMovie = new Movie("test", "drama", 1);
 
@@ -61,14 +63,14 @@ public class MovieTest {
         when(movieRepository.findByName(any())).thenReturn(Optional.empty());
 
         Optional<MovieDto> returnedDto = underTest
-                .update(testMovie.getName(),testMovie.getGenre(),2);
+                .update(testMovie.getName(), testMovie.getGenre(), 2);
 
         //then
         Assertions.assertTrue(returnedDto.isEmpty());
     }
 
     @Test
-    public void testDeleteMovieShouldBeSuccessful(){
+    public void testDeleteMovieShouldBeSuccessful() {
         //given
         Movie testMovie = new Movie("test", "drama", 1);
 
@@ -78,6 +80,65 @@ public class MovieTest {
         String result = underTest.delete(testMovie.getName());
 
         //then
-        Assertions.assertEquals(result,"deleted the movie called '" + testMovie.getName() + "'");
+        Assertions.assertEquals(result, "deleted the movie called '" + testMovie.getName() + "'");
+    }
+
+    @Test
+    public void testDeleteMovieShouldReturnEmpty() {
+        //given
+        Movie testMovie = new Movie("test", "drama", 1);
+
+        //when
+        when(movieRepository.findByName(any())).thenReturn(Optional.empty());
+
+        String result = underTest.delete(testMovie.getName());
+
+        //then
+        Mockito.verify(movieRepository).findByName(testMovie.getName());
+        Assertions.assertEquals(result, "nothing to delete");
+    }
+
+    @Test
+    public void testListAllMovieShouldReturnNonEmpty() {
+        //given
+        Movie testMovie = new Movie("test", "drama", 1);
+
+        //when
+        when(movieRepository.findAll()).thenReturn(List.of(testMovie));
+
+        Optional<List<MovieDto>> result = underTest.listAll();
+
+        //then
+        Mockito.verify(movieRepository).findAll();
+        Assertions.assertTrue(result.isPresent());
+    }
+
+    @Test
+    public void testListAllMovieShouldReturnEmpty() {
+        //given
+
+        //when
+        when(movieRepository.findAll()).thenReturn(List.of());
+
+        Optional<List<MovieDto>> result = underTest.listAll();
+
+        //then
+        Mockito.verify(movieRepository).findAll();
+        Assertions.assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void testGetSpecificMovieShouldReturnMovie() {
+        //given
+        Movie testMovie = new Movie("test", "drama", 1);
+
+        //when
+        when(movieRepository.findByName(any())).thenReturn(Optional.of(testMovie));
+
+        Optional<Movie> result = underTest.getSpecificMovie(testMovie.getName());
+
+        //then
+        Mockito.verify(movieRepository).findByName(testMovie.getName());
+        Assertions.assertTrue(result.isPresent());
     }
 }
