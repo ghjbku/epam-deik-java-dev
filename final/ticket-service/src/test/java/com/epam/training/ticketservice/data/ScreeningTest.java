@@ -59,14 +59,14 @@ public class ScreeningTest {
 
         //when
         doNothing().when(screeningRepository).delete(any());
-        when(screeningRepository.findByMovieMovieNameRoomRoomNameAndScreeningDate(any(), any(), any()))
+        when(screeningRepository.findByMovieNameRoomNameAndScreeningDate(any(), any(), any()))
                 .thenReturn(Optional.of(testScreening));
 
         underTest.delete(testScreening.getMovieName(), testScreening.getRoomName(), testScreening.getScreeningDate());
 
         //then
         Mockito.verify(screeningRepository)
-                .findByMovieMovieNameRoomRoomNameAndScreeningDate(testScreening.getMovieName(),
+                .findByMovieNameRoomNameAndScreeningDate(testScreening.getMovieName(),
                         testScreening.getRoomName(), testScreening.getScreeningDate());
         Mockito.verify(screeningRepository).delete(testScreening);
     }
@@ -88,18 +88,20 @@ public class ScreeningTest {
         //when
         when(screeningRepository.findAll()).thenReturn(testList);
 
-        Optional<List<ScreeningDto>> resultList=underTest.listAll();
+        Optional<List<ScreeningDto>> resultList = underTest.listAll();
 
         //then
         Mockito.verify(screeningRepository).findAll();
         Assertions.assertTrue(resultList.isPresent());
         Assertions.assertEquals(2, resultList.get().size());
-        Assertions.assertEquals(resultList.get().get(0).getMovieName(),testScreening.getMovieName());
-        Assertions.assertEquals(resultList.get().get(1).getMovieName(),testList.get(1).getMovieName());
+        Assertions.assertEquals(resultList.get().get(0).getMovieName(), testScreening.getMovieName());
+        Assertions.assertEquals(resultList.get().get(1).getMovieName(), testList.get(1).getMovieName());
+        Assertions.assertEquals(resultList.get().get(0).getRoomName(), testScreening.getRoomName());
+        Assertions.assertEquals(resultList.get().get(1).getScreeningDate(), testList.get(1).getScreeningDate());
     }
 
     @Test
-    public void testScreeningListAllShouldNotBeSuccessful() {
+    public void testScreeningListAllShouldReturnOptionalEmpty() {
         //given
         Date screeningDate = null, screeningDate2 = null;
         try {
@@ -115,7 +117,29 @@ public class ScreeningTest {
         //when
         when(screeningRepository.findAll()).thenReturn(List.of());
 
-        Optional<List<ScreeningDto>> resultList=underTest.listAll();
+        Optional<List<ScreeningDto>> resultList = underTest.listAll();
+
+        //then
+        Mockito.verify(screeningRepository).findAll();
+        Assertions.assertTrue(resultList.isEmpty());
+    }
+
+    @Test
+    public void testScreeningGetSpecificScreeningShouldReturnScreening() {
+        //given
+        Date screeningDate = null;
+        try {
+            screeningDate = sf.parse("1997-02-07 08:21");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Screening testScreening = new Screening(null, "test", "testRoom", screeningDate);
+        List<Screening> testList = List.of(testScreening);
+
+        //when
+        when(screeningRepository.findAll()).thenReturn(List.of());
+
+        Optional<List<ScreeningDto>> resultList = underTest.listAll();
 
         //then
         Mockito.verify(screeningRepository).findAll();

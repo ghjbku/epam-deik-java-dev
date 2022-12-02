@@ -26,7 +26,7 @@ public class ScreeningServiceImpl implements ScreeningService {
     @Override
     public void delete(String movieName, String roomName, Date screeningDate) {
         Optional<Screening> roomToDelete = screeningRepository
-                .findByMovieMovieNameRoomRoomNameAndScreeningDate(movieName, roomName, screeningDate);
+                .findByMovieNameRoomNameAndScreeningDate(movieName, roomName, screeningDate);
 
         roomToDelete.ifPresent(screeningRepository::delete);
 
@@ -50,7 +50,7 @@ public class ScreeningServiceImpl implements ScreeningService {
     @Override
     public Screening getSpecificScreening(String movieName, String roomName) {
         Optional<Screening> toReturn = screeningRepository
-                .findByMovieMovieNameRoomRoomName(movieName, roomName);
+                .findByMovienameAndRoomname(movieName, roomName);
 
         return toReturn.orElse(null);
     }
@@ -58,7 +58,7 @@ public class ScreeningServiceImpl implements ScreeningService {
     @Override
     public List<Screening> getSpecificScreeningByRoom(String roomName) {
         Optional<List<Screening>> toReturn = screeningRepository
-                .findByRoomRoomName(roomName);
+                .findByRoomName(roomName);
 
         return toReturn.orElse(null);
     }

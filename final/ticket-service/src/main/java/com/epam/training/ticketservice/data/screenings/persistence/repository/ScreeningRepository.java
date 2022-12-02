@@ -17,19 +17,19 @@ public interface ScreeningRepository extends JpaRepository<Screening, Integer> {
             + "AND EXISTS (SELECT 1 FROM Rooms r WHERE r.name = scr.room_Name AND r.name = ?2) "
             + "AND scr.screening_Date = ?3",
             nativeQuery = true)
-    Optional<Screening> findByMovieMovieNameRoomRoomNameAndScreeningDate(String movieName,
-                                                                         String roomName,
-                                                                         Date screeningDate);
+    Optional<Screening> findByMovieNameRoomNameAndScreeningDate(String movieName,
+                                                                String roomName,
+                                                                Date screeningDate);
 
     @Query(value = "SELECT * FROM Screenings scr WHERE "
             + "EXISTS (SELECT 1 FROM Movies m WHERE m.name = scr.MOVIE_Name AND m.name = ?1) "
             + "AND EXISTS (SELECT 1 FROM Rooms r WHERE r.name = scr.room_Name AND r.name = ?2) ",
             nativeQuery = true)
-    Optional<Screening> findByMovieMovieNameRoomRoomName(String movieName, String roomName);
+    Optional<Screening> findByMovienameAndRoomname(String movieName, String roomName);
 
     @Query(value = "SELECT * FROM Screenings scr WHERE "
             + "EXISTS (SELECT 1 FROM Rooms r WHERE r.name = scr.room_Name AND r.name = ?1) ",
             nativeQuery = true)
-    Optional<List<Screening>> findByRoomRoomName(String roomName);
+    Optional<List<Screening>> findByRoomName(String roomName);
 
 }
