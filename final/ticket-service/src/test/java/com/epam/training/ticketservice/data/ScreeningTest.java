@@ -98,6 +98,10 @@ public class ScreeningTest {
         Assertions.assertEquals(resultList.get().get(1).getMovieName(), testList.get(1).getMovieName());
         Assertions.assertEquals(resultList.get().get(0).getRoomName(), testScreening.getRoomName());
         Assertions.assertEquals(resultList.get().get(1).getScreeningDate(), testList.get(1).getScreeningDate());
+
+        Assertions.assertEquals(resultList.get().get(0),
+                new ScreeningDto(testScreening.getMovieName(), testScreening.getRoomName(),
+                        testScreening.getScreeningDate()));
     }
 
     @Test
@@ -134,17 +138,101 @@ public class ScreeningTest {
             e.printStackTrace();
         }
         Screening testScreening = new Screening(null, "test", "testRoom", screeningDate);
-        List<Screening> testList = List.of(testScreening);
 
         //when
-        when(screeningRepository.findAll()).thenReturn(List.of());
+        when(screeningRepository
+                .findByMovienameAndRoomname(testScreening.getMovieName(), testScreening.getRoomName()))
+                .thenReturn(Optional.of(testScreening));
 
-        Optional<List<ScreeningDto>> resultList = underTest.listAll();
+        Screening result = underTest.
+                getSpecificScreening(testScreening.getMovieName(), testScreening.getRoomName());
 
         //then
-        Mockito.verify(screeningRepository).findAll();
-        Assertions.assertTrue(resultList.isEmpty());
+        Mockito.verify(screeningRepository)
+                .findByMovienameAndRoomname(testScreening.getMovieName(), testScreening.getRoomName());
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(result, testScreening);
+        Assertions.assertEquals(result.getMovieName(), testScreening.getMovieName());
     }
 
+    @Test
+    public void testScreeningGetSpecificScreeningShouldReturnNull() {
+        //given
+        Date screeningDate = null;
+        try {
+            screeningDate = sf.parse("1997-02-07 08:21");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Screening testScreening = new Screening(null, "test", "testRoom", screeningDate);
+
+        //when
+        when(screeningRepository
+                .findByMovienameAndRoomname(testScreening.getMovieName(), testScreening.getRoomName()))
+                .thenReturn(Optional.empty());
+
+        Screening result = underTest.
+                getSpecificScreening(testScreening.getMovieName(), testScreening.getRoomName());
+
+        //then
+        Mockito.verify(screeningRepository)
+                .findByMovienameAndRoomname(testScreening.getMovieName(), testScreening.getRoomName());
+        Assertions.assertNull(result);
+    }
+
+    @Test
+    public void testScreeningGetSpecificScreeningByRoomShouldReturnListOfScreenings() {
+        //given
+        Date screeningDate = null, screeningDate2 = null;
+        try {
+            screeningDate = sf.parse("1997-02-07 08:21");
+            screeningDate2 = sf.parse("1997-02-08 08:21");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Screening testScreening = new Screening(null, "test", "testRoom", screeningDate);
+        List<Screening> testList = List.of(testScreening,
+                new Screening(null, "test2", "testRoom", screeningDate2));
+
+        //when
+        when(screeningRepository
+                .findByRoomName(any()))
+                .thenReturn(Optional.of(testList));
+
+        List<Screening> result = underTest.
+                getSpecificScreeningByRoom(testScreening.getRoomName());
+
+        //then
+        Mockito.verify(screeningRepository)
+                .findByRoomName(testScreening.getRoomName());
+        Assertions.assertFalse(result.isEmpty());
+        Assertions.assertEquals(result.get(0).getMovieName(), testScreening.getMovieName());
+    }
+
+    @Test
+    public void testScreeningGetSpecificScreeningByRoomShouldReturnNull() {
+        //given
+        Date screeningDate = null;
+        try {
+            screeningDate = sf.parse("1997-02-07 08:21");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Screening testScreening = new Screening(null, "test", "testRoom", screeningDate);
+
+
+        //when
+        when(screeningRepository
+                .findByRoomName(any()))
+                .thenReturn(Optional.empty());
+
+        List<Screening> result = underTest.
+                getSpecificScreeningByRoom(testScreening.getRoomName());
+
+        //then
+        Mockito.verify(screeningRepository)
+                .findByRoomName(testScreening.getRoomName());
+        Assertions.assertNull(result);
+    }
 
 }

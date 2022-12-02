@@ -34,6 +34,7 @@ public class UserTest {
         //then
         Mockito.verify(userRepository).findByUsernameAndPassword(testUser.getUsername(), testUser.getPassword());
         Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(result.get(), new UserDto(testUser.getUsername(), testUser.getRole()));
         Assertions.assertEquals(result.get().getUsername(), testUser.getUsername());
         Assertions.assertEquals(result.get().getRole(), testUser.getRole());
     }
