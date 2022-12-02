@@ -109,7 +109,7 @@ public class RoomTest {
         Room testRoom2 = new Room("test2", 1, 1);
 
         //when
-        when(roomRepository.findAll()).thenReturn(List.of(testRoom,testRoom2));
+        when(roomRepository.findAll()).thenReturn(List.of(testRoom, testRoom2));
 
         Optional<List<RoomDto>> resultList = underTest.listAll();
 
@@ -117,7 +117,7 @@ public class RoomTest {
         Mockito.verify(roomRepository).findAll();
         Assertions.assertTrue(resultList.isPresent());
         Assertions.assertEquals(resultList.get().get(0),
-                new RoomDto(testRoom.getName(), 1,1));
+                new RoomDto(testRoom.getName(), 1, 1));
     }
 
     @Test
@@ -132,6 +132,22 @@ public class RoomTest {
         //then
         Mockito.verify(roomRepository).findAll();
         Assertions.assertTrue(resultList.isEmpty());
+    }
+
+    @Test
+    public void testGetSpecificRoomRoomShouldBeSuccessful() {
+        //given
+        Room testRoom = new Room("test", 1, 1);
+
+        //when
+        when(roomRepository.findByName(any())).thenReturn(Optional.of(testRoom));
+
+        Optional<Room> result = underTest.getSpecificRoom(testRoom.getName());
+
+        //then
+        Mockito.verify(roomRepository).findByName(testRoom.getName());
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(result.get().getName(), testRoom.getName());
     }
 
 
