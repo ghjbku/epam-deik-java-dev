@@ -1,6 +1,5 @@
 package com.epam.training.ticketservice.data;
 
-import com.epam.training.ticketservice.data.movies.persistence.entity.Movie;
 import com.epam.training.ticketservice.data.users.UserService;
 import com.epam.training.ticketservice.data.users.UserServiceImpl;
 import com.epam.training.ticketservice.data.users.model.UserDto;
@@ -13,7 +12,8 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UserTest {
 
