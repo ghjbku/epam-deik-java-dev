@@ -1,5 +1,6 @@
 package com.epam.training.ticketservice.data;
 
+import com.epam.training.ticketservice.data.movies.persistence.entity.Movie;
 import com.epam.training.ticketservice.data.users.UserService;
 import com.epam.training.ticketservice.data.users.UserServiceImpl;
 import com.epam.training.ticketservice.data.users.model.UserDto;
@@ -12,8 +13,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserTest {
 
@@ -67,5 +67,19 @@ public class UserTest {
         //then
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(result.get().getUsername(), testUser.getUsername());
+    }
+
+    @Test
+    public void testUserRegisterShouldBeSuccessful() {
+        //given
+        User testUser = new User("test", "drama", User.Role.USER);
+
+        //when
+        when(userRepository.save(any())).thenReturn(new User());
+
+        underTest.registerUser(testUser.getUsername(), testUser.getPassword());
+
+        //then
+        Mockito.verify(userRepository).save(testUser);
     }
 }
